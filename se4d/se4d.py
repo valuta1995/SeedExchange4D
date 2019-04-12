@@ -34,6 +34,7 @@ LIST_OF_SUPPORTED_SEEDS = [
 
 global_state = {"global_vars": GLOBAL_APPLICATION_VARIABLES}
 seed_list = {"seed_list": LIST_OF_SUPPORTED_SEEDS}
+dummy_db = []
 server = Bottle()
 
 
@@ -68,30 +69,47 @@ def get_vxml_file(filename):
     return str(instance)
 
 
-def get_database_list(provide_name, request_name, transport_name):
+def get_database_list(provide_name, provide_unit, request_name, request_unit, transport_name):
     # Here will be a request to show only entries that are available
+    global dummy_db
     if transport_name == 'false':
-        return {"trade_list": [
-            {"id": 1234, "provide_name": request_name, "request_name": provide_name, "transport_name": "true",
+        dummy_db = {"trade_list": [
+            {"id": 1234, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
+             "request_unit": provide_unit, "transport_name": "true",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
-            {"id": 1236, "provide_name": request_name, "request_name": provide_name, "transport_name": "true",
+
+            {"id": 1236, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
+             "request_unit": provide_unit, "transport_name": "true",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
-            {"id": 1238, "provide_name": request_name, "request_name": provide_name, "transport_name": "true",
+
+            {"id": 1238, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
+             "request_unit": provide_unit, "transport_name": "true",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
         ]}
+        return {"trade_list": dummy_db}
     else:
-        return {"trade_list": [
-            {"id": 1234, "provide_name": request_name, "request_name": provide_name, "transport_name": "true",
+        dummy_db = [
+            {"id": 1234, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
+             "request_unit": provide_unit, "transport_name": "true",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
-            {"id": 1235, "provide_name": request_name, "request_name": provide_name, "transport_name": "false",
+
+            {"id": 1235, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
+             "request_unit": provide_unit, "transport_name": "false",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
-            {"id": 1236, "provide_name": request_name, "request_name": provide_name, "transport_name": "true",
+
+            {"id": 1236, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
+             "request_unit": provide_unit, "transport_name": "true",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
-            {"id": 1237, "provide_name": request_name, "request_name": provide_name, "transport_name": "false",
+
+            {"id": 1237, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
+             "request_unit": provide_unit, "transport_name": "false",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
-            {"id": 1238, "provide_name": request_name, "request_name": provide_name, "transport_name": "true",
+
+            {"id": 1238, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
+             "request_unit": provide_unit, "transport_name": "true",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
-        ]}
+        ]
+        return {"trade_list": dummy_db}
 
 
 @server.post('/search_trade/')
@@ -111,17 +129,27 @@ def post_search_trade():
     dic0.update(CORE_SETTINGS)
     dic0.update(global_state)
     dic0.update(seed_list)
-    dic0.update(get_database_list(provide_name, request_name, transport_name))
+    dic0.update(get_database_list(provide_name, provide_unit, request_name, request_unit, transport_name))
     instance = template("%stemplates//request_trade_list.tpl" % BASE_PATH, dic0)
     response.content_type = 'text/plain'
     return str(instance)
 
 
+def get_entry_from_db(db, trade_id):
+    for entry in db:
+        if entry['id'] == trade_id:
+            return entry
+
+    return None
+
+
 def get_database_entry(trade_id):
-    return {"trade_entry": {
-        "id": trade_id, "provide_name": "dummy", "request_name": "dummy", "transport_name": "true",
-        "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"
-    }}
+    global dummy_db
+    entry = get_entry_from_db(dummy_db, trade_id)
+    if entry is None:
+        print("We got a woot error over here.")
+        abort(404)
+    return {"trade_entry": entry}
 
 
 @server.get('/trades/<trade_id:int>.vxml')
