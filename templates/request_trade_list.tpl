@@ -16,10 +16,21 @@
 
         <filled>
             % for i in range(len(trade_list)):
-            <if cond="trade_id == {{i}}">
+            <if cond="trade_id == {{i + 1}}">
                 <goto next="/trades/{{trade_list[i]['id']}}.vxml"/>
             </if>
             % end
+            <goto next="#invalid"/>
         </filled>
+    </form>
+
+    <form id="invalid">
+        <block>
+            <p>
+                <s>There are only {{len(trade_list)}} entries.</s>
+                <s>Please select a different entry.</s>
+            </p>
+        </block>
+        <goto next="#request_trade_list"/>
     </form>
 </vxml>
