@@ -2,7 +2,7 @@ import datetime
 import os
 import time
 
-from bottle import template, Bottle, response, request, abort, run
+from bottle import template, Bottle, response, request, abort, run, static_file
 
 # Where is the application root hosted?
 HOST_NAME = "https://vxml.valutadev.com"
@@ -74,13 +74,8 @@ def get_vxml_file(filename):
     filename = filename.replace(".", "")
     filename = filename.replace("/", "")
     filename = filename.replace("\\", "")
-    dic0 = dict()
-    dic0.update(CORE_SETTINGS)
-    dic0.update(global_state)
-    dic0.update(seed_list)
-    instance = template("%sclips//%s.wav" % (BASE_PATH, filename), dic0)
     response.content_type = 'audio/wav'
-    return str(instance)
+    return static_file("%s.wav" % filename, root="%sclips/" % BASE_PATH)
 
 
 def get_database_list(provide_name, provide_unit, request_name, request_unit, transport_name):
@@ -90,38 +85,38 @@ def get_database_list(provide_name, provide_unit, request_name, request_unit, tr
         dummy_db = [
             {"id": 1234, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
              "request_unit": provide_unit, "transport_name": "true",
-             "audio_name_location": "2019-04-12_17:56:52_audio_name_location-1555091812772.wav"},
+             "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
 
             {"id": 1236, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
              "request_unit": provide_unit, "transport_name": "true",
-             "audio_name_location": "2019-04-12_17:56:52_audio_name_location-1555091812772.wav"},
+             "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
 
             {"id": 1238, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
              "request_unit": provide_unit, "transport_name": "true",
-             "audio_name_location": "2019-04-12_17:56:52_audio_name_location-1555091812772.wav"},
+             "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
         ]
         return {"trade_list": dummy_db}
     else:
         dummy_db = [
             {"id": 1234, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
              "request_unit": provide_unit, "transport_name": "true",
-             "audio_name_location": "2019-04-12_17:56:52_audio_name_location-1555091812772.wav"},
+             "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
 
             {"id": 1235, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
              "request_unit": provide_unit, "transport_name": "false",
-             "audio_name_location": "2019-04-12_17:56:52_audio_name_location-1555091812772.wav"},
+             "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
 
             {"id": 1236, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
              "request_unit": provide_unit, "transport_name": "true",
-             "audio_name_location": "2019-04-12_17:56:52_audio_name_location-1555091812772.wav"},
+             "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
 
             {"id": 1237, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
              "request_unit": provide_unit, "transport_name": "false",
-             "audio_name_location": "2019-04-12_17:56:52_audio_name_location-1555091812772.wav"},
+             "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
 
             {"id": 1238, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
              "request_unit": provide_unit, "transport_name": "true",
-             "audio_name_location": "2019-04-12_17:56:52_audio_name_location-1555091812772.wav"},
+             "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
         ]
         return {"trade_list": dummy_db}
 
