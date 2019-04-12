@@ -68,13 +68,49 @@ def get_vxml_file(filename):
     return str(instance)
 
 
+def get_database_list(provide_name, request_name, transport_name):
+    # Here will be a request to show only entries that are available
+    if transport_name == 'pick up':
+        return {"trade_list": [
+            {"provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
+             "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
+            {"provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
+             "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
+            {"provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
+             "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
+        ]}
+    else:
+        return {"trade_list": [
+            {"provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
+             "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
+            {"provide_name": request_name, "request_name": provide_name, "transport_name": "pick up",
+             "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
+            {"provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
+             "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
+            {"provide_name": request_name, "request_name": provide_name, "transport_name": "pick up",
+             "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
+            {"provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
+             "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
+        ]}
+
+
 @server.post('/search_trade')
 def get_vxml_file():
-    print(request)
+    provide_name = request.forms.get("provide_name")
+    provide_unit = request.forms.get("provide_unit")
+    print("Want %s of %s." % (provide_unit, provide_name))
+
+    request_name = request.forms.get("request_name")
+    request_unit = request.forms.get("request_unit")
+    print("Give %s of %s." % (request_unit, request_name))
+
+    transport_name = request.forms.get("transport_name")
+    print("Transport by %s." % transport_name)
     dic0 = dict()
     dic0.update(CORE_SETTINGS)
     dic0.update(global_state)
     dic0.update(seed_list)
+    dic0.update(get_database_list(provide_name, request_name, transport_name))
     instance = template("%stemplates//request_trade_list.tpl" % BASE_PATH, dic0)
     response.content_type = 'text/plain'
     return str(instance)
@@ -119,14 +155,6 @@ def get_vxml_file():
     timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
     audio_file.save("%sclips/%s_%s" % (BASE_PATH, timestamp, audio_file.filename), overwrite=True)
 
-    # trade_data = get_database_entry(trade_id)
-    # dic0 = dict()
-    # dic0.update(CORE_SETTINGS)
-    # dic0.update(global_state)
-    # dic0.update(seed_list)
-    # dic0.update(trade_data)
-    # instance = template("%stemplates//trade_entry.tpl" % BASE_PATH, dic0)
-    # response.content_type = 'text/plain'
     return str("")
 
 

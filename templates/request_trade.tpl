@@ -115,12 +115,12 @@
                 </s>
             </p>
             <p>
-                <s>Can you transport the seeds to the other person or will they have to come to pick them up?</s>
+                <s>Must the other party have transport available?</s>
             </p>
             <break time="500"/>
             <p>
-                <s>If you can deliver, press 1.</s>
-                <s>If you want a pick up, press 2.</s>
+                <s>If you can arrange transport, press 1.</s>
+                <s>If you cannot arrange transport, press 2.</s>
 
                 <s>To organise something else, press 9.</s>
                 <s>To go back, press 0.</s>
