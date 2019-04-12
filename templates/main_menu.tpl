@@ -4,12 +4,6 @@
     <!-- set input to DTMF-->
     <property name="inputmodes" value="dtmf"/>
 
-    <!--<form id="initialize">-->
-        <!--<block>-->
-            <!--<assign name="caller_id" expr="session.connection.remote.uri"/>-->
-        <!--</block>-->
-    <!--</form>-->
-
     <menu id="main_menu" scope="dialog">
         <prompt>
             Welcome
@@ -18,6 +12,7 @@
         <prompt>
             <break time="500"/>
             To provide seeds in trade, press 1.
+            <assign name="caller_id" expr="session.connection.remote.uri"/>
             To request seeds in trade, press 2.
             To check on your current trades, press 3.
         </prompt>
