@@ -47,7 +47,8 @@ def hook_allow_cors():
 
 @server.get('/')
 def get_empty():
-    return "Please use <a href=\"./root.vxml\">root.vxml</a> instead."
+    return "Please use <a href=\"./root.vxml\">root.vxml</a> instead." \
+           "<br/>Alternatively call us through <a href=\"sip:9996151951@sip.lhr.aspect-cloud.net\">SIP</a>"
 
 
 @server.get('/favicon.ico')
