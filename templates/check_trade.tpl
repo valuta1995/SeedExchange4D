@@ -7,7 +7,7 @@
     <catch event="listen_to_entry">
         % for i in range(len(trade_list)):
         <if cond="_message == {{i + 1}}">
-            <goto next="/trades/{{trade_list[i]['id']}}.vxml"/>
+            <goto next="/trades/{{user_data['trade_list'][i]['id']}}.vxml"/>
         </if>
         % end
         <goto next="#invalid"/>
@@ -16,7 +16,7 @@
     <catch event="delete_entry">
         % for i in range(len(trade_list)):
         <if cond="_message == {{i + 1}}">
-            <submit next="/trades/delete/{{trade_list[i]['id']}}.vxml" namelist="caller_id"/>
+            <submit next="/trades/delete/{{user_data['trade_list'][i]['id']}}.vxml" namelist="caller_id"/>
         </if>
         % end
         <goto next="#invalid"/>

@@ -57,6 +57,17 @@ def abort_request():
     abort(404)
 
 
+def get_user_data(user_id):
+    print("Stapling user data for +%s to data package." % user_id)
+    global dummy_db
+    if len(dummy_db) < 1:
+        populate_dummy_db("rice", "bags", "wheat", "bags")
+    return {"user_data": {
+        "trade_list": dummy_db,
+        "caller_id": user_id,
+    }}
+
+
 @server.get('/<filename>.vxml')
 def get_vxml_file(filename):
     filename = filename.replace(".", "")
@@ -66,6 +77,7 @@ def get_vxml_file(filename):
     dic0.update(CORE_SETTINGS)
     dic0.update(global_state)
     dic0.update(seed_list)
+    dic0.update(get_user_data(request.query['user_id']))
     instance = template("%stemplates//%s.tpl" % (BASE_PATH, filename), dic0)
     response.content_type = 'text/plain'
     return str(instance)
@@ -99,28 +111,33 @@ def get_database_list(provide_name, provide_unit, request_name, request_unit, tr
         ]
         return {"trade_list": dummy_db}
     else:
-        dummy_db = [
-            {"id": 1234, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
-             "request_unit": provide_unit, "transport_name": "true",
-             "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
-
-            {"id": 1235, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
-             "request_unit": provide_unit, "transport_name": "false",
-             "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
-
-            {"id": 1236, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
-             "request_unit": provide_unit, "transport_name": "true",
-             "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
-
-            {"id": 1237, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
-             "request_unit": provide_unit, "transport_name": "false",
-             "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
-
-            {"id": 1238, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
-             "request_unit": provide_unit, "transport_name": "true",
-             "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
-        ]
+        populate_dummy_db(provide_name, provide_unit, request_name, request_unit)
         return {"trade_list": dummy_db}
+
+
+def populate_dummy_db(provide_name, provide_unit, request_name, request_unit):
+    global dummy_db
+    dummy_db = [
+        {"id": 1234, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
+         "request_unit": provide_unit, "transport_name": "true",
+         "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
+
+        {"id": 1235, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
+         "request_unit": provide_unit, "transport_name": "false",
+         "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
+
+        {"id": 1236, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
+         "request_unit": provide_unit, "transport_name": "true",
+         "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
+
+        {"id": 1237, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
+         "request_unit": provide_unit, "transport_name": "false",
+         "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
+
+        {"id": 1238, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
+         "request_unit": provide_unit, "transport_name": "true",
+         "audio_name_location": "20190412_181710_audio_name_location-1555093030557.wav"},
+    ]
 
 
 @server.post('/search_trade/')
