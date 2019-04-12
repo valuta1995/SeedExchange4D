@@ -90,7 +90,7 @@ def get_database_list(provide_name, provide_unit, request_name, request_unit, tr
         dummy_db = [
             {"id": 1234, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
              "request_unit": provide_unit, "transport_name": "true",
-             "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
+             "audio_name_location": "2019-04-12 17:54:47_audio_name_location-1555091687503.wav"},
 
             {"id": 1236, "provide_name": request_name, "provide_unit": request_unit, "request_name": provide_name,
              "request_unit": provide_unit, "transport_name": "true",
@@ -193,7 +193,7 @@ def post_new_trade():
     print("Transport by %s." % transport_name)
 
     audio_file = request.files.get("audio_name_location")
-    timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+    timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d_%H:%M:%S')
     audio_file.save("%sclips/%s_%s" % (BASE_PATH, timestamp, audio_file.filename), overwrite=True)
 
     return str("")
