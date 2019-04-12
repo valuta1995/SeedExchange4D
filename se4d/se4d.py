@@ -96,6 +96,7 @@ def get_database_list(provide_name, request_name, transport_name):
 
 @server.post('/search_trade/')
 def post_search_trade():
+    print("Alive and kicking!?")
     provide_name = request.forms.get("provide_name")
     provide_unit = request.forms.get("provide_unit")
     print("Want %s of %s." % (provide_unit, provide_name))
