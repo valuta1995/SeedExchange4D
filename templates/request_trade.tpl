@@ -6,8 +6,6 @@
 
     <!-- handle event for storing offer and moving to request -->
     <catch event="on_provide_selected">
-        <prompt>.</prompt>
-
         <assign name="provide_name" expr="_message"/>
         <assign name="provide_unit" expr="'bags'"/>
 
@@ -16,8 +14,6 @@
 
     <!-- handle event for storing request and moving to info -->
     <catch event="on_request_selected">
-        <prompt>.</prompt>
-
         <assign name="request_name" expr="_message"/>
         <assign name="request_unit" expr="'bags'"/>
 
@@ -26,15 +22,16 @@
 
     <!-- handle event for storing request and moving to info -->
     <catch event="on_transport_selected">
-        <prompt>.</prompt>
 
         <assign name="transport_name" expr="_message"/>
+        <assign name="transport_description" expr="'you and the other person will figure out another way'"/>
+
         <if cond="_message == 'deliver'">
-            <assign name="transport_desciption" expr="you will deliver to the other person"/>
+            <assign name="transport_description" expr="'you will deliver to the other person'"/>
         </if>
 
         <if cond="_message == 'pick up'">
-            <assign name="transport_desciption" expr="the other person will have to pick up"/>
+            <assign name="transport_description" expr="'the other person will have to pick up'"/>
         </if>
 
         <goto next="#stage_4"/>
