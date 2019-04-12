@@ -193,7 +193,7 @@ def post_new_trade():
     print("Transport by %s." % transport_name)
 
     audio_file = request.files.get("audio_name_location")
-    timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d_%H:%M:%S')
+    timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')
     audio_file.save("%sclips/%s_%s" % (BASE_PATH, timestamp, audio_file.filename), overwrite=True)
 
     return str("")
