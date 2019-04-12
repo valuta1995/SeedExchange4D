@@ -9,7 +9,7 @@
     <menu id="stage_1">
         <prompt>
             <p>
-                <s>What seeds do you want to offer?</s>
+                <s><value expr="session.connection.remote.uri"/></s>
             </p>
             <break time="500"/>
             <p>
