@@ -118,11 +118,9 @@ def post_search_trade():
 
 
 def get_database_entry(trade_id):
-    return {"trade_data": {
-        "provide_name": "rice",
-        "request_name": "wheat",
-        "transport_name": "deliver",
-        "audio_name_location": "John Doe %d from Amsterdam" % trade_id
+    return {"trade_entry": {
+        "id": trade_id, "provide_name": "dummy", "request_name": "dummy", "transport_name": "true",
+        "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"
     }}
 
 
