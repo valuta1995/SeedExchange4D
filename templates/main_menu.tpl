@@ -7,20 +7,38 @@
     <menu id="main_menu" scope="dialog">
         <prompt>
             Welcome
+            <assign name="caller_id" expr="session.connection.remote.uri"/>
         </prompt>
 
         <prompt>
             <break time="500"/>
             To provide seeds in trade, press 1.
-            <assign name="caller_id" expr="session.connection.remote.uri"/>
             To request seeds in trade, press 2.
             To check on your current trades, press 3.
         </prompt>
 
-        <choice next="/provide_trade.vxml#stage_1" dtmf="1"/>
-        <choice next="/request_trade.vxml#stage_1" dtmf="2"/>
-        <choice next="/check_trade.vxml#stage_1" dtmf="3"/>
+        <choice next="#provide_trade" dtmf="1"/>
+        <choice next="#request_trade" dtmf="2"/>
+        <choice next="#check_trade" dtmf="3"/>
     </menu>
+
+    <form id="provide_trade">
+        <block>
+            <submit next="/provide_trade.vxml#stage_1" namelist="caller_id" dtmf="1"/>
+        </block>
+    </form>
+
+    <form id="request_trade">
+        <block>
+            <submit next="/request_trade.vxml#stage_1" namelist="caller_id" dtmf="1"/>
+        </block>
+    </form>
+
+    <form id="check_trade">
+        <block>
+            <submit next="/check_trade.vxml#stage_1" namelist="caller_id" dtmf="1"/>
+        </block>
+    </form>
 
     <form id="leave">
         <block>
