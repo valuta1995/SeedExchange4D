@@ -29,13 +29,13 @@
         <prompt>.</prompt>
 
         <assign name="transport_name" expr="_message"/>
-        <if cond="_message == 'deliver'">
-            <assign name="transport_desciption" expr="you will deliver to the other person"/>
-        </if>
+        <!--<if cond="_message == 'deliver'">-->
+            <!--<assign name="transport_desciption" expr="you will deliver to the other person"/>-->
+        <!--</if>-->
 
-        <if cond="_message == 'pick up'">
-            <assign name="transport_desciption" expr="the other person will have to pick up"/>
-        </if>
+        <!--<if cond="_message == 'pick up'">-->
+            <!--<assign name="transport_desciption" expr="the other person will have to pick up"/>-->
+        <!--</if>-->
 
         <goto next="#stage_4"/>
     </catch>
