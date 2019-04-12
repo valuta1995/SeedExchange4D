@@ -77,7 +77,8 @@ def get_vxml_file(filename):
     dic0.update(CORE_SETTINGS)
     dic0.update(global_state)
     dic0.update(seed_list)
-    dic0.update(get_user_data(request.query['user_id']))
+    if 'user_id' in request.query:
+        dic0.update(get_user_data(request.query['user_id']))
     instance = template("%stemplates//%s.tpl" % (BASE_PATH, filename), dic0)
     response.content_type = 'text/plain'
     return str(instance)
