@@ -2,6 +2,6 @@
 <vxml version="{{vxml_version}}">
     <!-- variables (shared between files in the system)-->
     % for var in global_vars:
-    <var name={{var}}/>
+    <var name="{{var}}"/>
     % end
 </vxml>

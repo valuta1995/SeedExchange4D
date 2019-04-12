@@ -2,18 +2,37 @@ import os
 
 from bottle import template, Bottle, response, request, abort, run
 
+# Where is the application root hosted?
 HOST_NAME = "https://vxml.valutadev.com"
 
+# Some global settings
 CORE_SETTINGS = {
+    # What version of VXML are you using
     "vxml_version": "2.1",
     "application": "%s/root.vxml" % HOST_NAME,
 }
 
 BASE_PATH = os.getcwd()[:-4]
 
-global_state = dict()
-global_state.update({"global_vars": ["lang", "user", "product", "quantity", "price", "duration", "path", "ext"]})
 
+# Ensure these variables include all the variables used in the application.
+# Extra variables will not cause issues. missing variables will cause issues.
+GLOBAL_APPLICATION_VARIABLES = [
+    "provide_name", "provide_unit",
+    "request_name", "request_unit",
+    "transport_name"
+]
+
+LIST_OF_SUPPORTED_SEEDS = [
+    {"name": "yam", "unit": "bags"},
+    {"name": "soybeans", "unit": "bags"},
+    {"name": "maize", "unit": "bags"},
+    {"name": "rice", "unit": "bags"},
+    {"name": "wheat", "unit": "bags"},
+]
+
+global_state = {"global_vars": GLOBAL_APPLICATION_VARIABLES}
+seed_list = {"seed_list": LIST_OF_SUPPORTED_SEEDS}
 server = Bottle()
 
 
@@ -36,9 +55,13 @@ def abort_request():
 
 @server.get('/<filename>.vxml')
 def get_vxml_file(filename):
+    filename = filename.replace(".", "")
+    filename = filename.replace("/", "")
+    filename = filename.replace("\\", "")
     dic0 = dict()
     dic0.update(CORE_SETTINGS)
     dic0.update(global_state)
+    dic0.update(seed_list)
     instance = template("%stemplates//%s.tpl" % (BASE_PATH, filename), dic0)
     response.content_type = 'text/plain'
     return str(instance)
