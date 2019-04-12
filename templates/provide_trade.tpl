@@ -211,15 +211,6 @@
         </field>
     </form>
 
-    <form id="leave">
-        <prompt>
-            <p>
-                <s>We wish you a good day!</s>
-            </p>
-        </prompt>
-        <disconnect/>
-    </form>
-
     <!-- At this stage the user is asked if they want to exit or go again -->
     <menu id="stage_finished" scope="dialog" dtmf="true">
         <prompt>
@@ -232,6 +223,6 @@
         </prompt>
         <choice next="#stage_1" dtmf="1"/>
         <choice next="main_menu.vxml#main_menu" dtmf="2"/>
-        <choice next="#leave" dtmf="3"/>
+        <choice next="main_menu.vxml#leave" dtmf="3"/>
     </menu>
 </vxml>
