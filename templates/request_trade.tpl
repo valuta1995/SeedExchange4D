@@ -172,9 +172,9 @@
     </menu>
 
 
-    <form>
-
-    </form>
+    <block id="stage_5">
+        <submit next="search_trade" namelist="provide_name provide_unit request_name request_unit transport_name"/>
+    </block>
 
 
     <!-- At this stage the user is asked if they want to exit or go again -->

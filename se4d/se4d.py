@@ -67,4 +67,38 @@ def get_vxml_file(filename):
     return str(instance)
 
 
+@server.post('/search_trade')
+def get_vxml_file():
+    print(request)
+    dic0 = dict()
+    dic0.update(CORE_SETTINGS)
+    dic0.update(global_state)
+    dic0.update(seed_list)
+    instance = template("%stemplates//request_trade_list.tpl" % BASE_PATH, dic0)
+    response.content_type = 'text/plain'
+    return str(instance)
+
+
+def get_database_entry(trade_id):
+    return {"trade_data": {
+        "provide_name": "rice",
+        "request_name": "wheat",
+        "transport_name": "deliver",
+        "audio_name_location": "John Doe %d from Amsterdam" % trade_id
+    }}
+
+
+@server.get('/trades/<trade_id:number>.vxml')
+def get_vxml_file(trade_id):
+    trade_data = get_database_entry(trade_id)
+    dic0 = dict()
+    dic0.update(CORE_SETTINGS)
+    dic0.update(global_state)
+    dic0.update(seed_list)
+    dic0.update(trade_data)
+    instance = template("%stemplates//trade_entry.tpl" % BASE_PATH, dic0)
+    response.content_type = 'text/plain'
+    return str(instance)
+
+
 run(server, host="localhost", port=10123)
