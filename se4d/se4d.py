@@ -113,11 +113,8 @@ def get_vxml_file():
     transport_name = request.forms.get("transport_name")
     print("Transport by %s." % transport_name)
 
-    audio_form = request.forms.get("audio_name_location")
     audio_file = request.files.get("audio_name_location")
-
-    print("Form:", audio_form)
-    print("File:", audio_file)
+    print(audio_file.file)
 
     # trade_data = get_database_entry(trade_id)
     # dic0 = dict()
