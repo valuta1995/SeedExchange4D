@@ -6,11 +6,11 @@
             <p>
                 <s>
                     This is the offer of
-                    <audio expr="{{trade_entry.audio}}"/>
+                    <audio expr="{{trade_entry['audio']}}"/>
                 </s>
                 <s>
-                    They offer {{trade_entry.provide_unit}} of {{trade_entry.provide_name}} for your
-                    {{trade_entry.request_unit}} of {{trade_entry.request_name}}.
+                    They offer {{trade_entry['provide_unit']}} of {{trade_entry['provide_name']}} for your
+                    {{trade_entry['request_unit']}} of {{trade_entry['request_name']}}.
                 </s>
             </p>
             <p>
