@@ -20,4 +20,13 @@
         <choice next="request_trade.vxml#stage_1" dtmf="2"/>
         <choice next="check_trade.vxml#stage_1" dtmf="3"/>
     </menu>
+
+    <block id="disconnect">
+        <prompt>
+            <p>
+                <s>We wish you a good day!</s>
+            </p>
+        </prompt>
+        <disconnect/>
+    </block>
 </vxml>
