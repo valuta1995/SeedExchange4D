@@ -117,7 +117,7 @@ def get_vxml_file():
 
     audio_file = request.files.get("audio_name_location")
     timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
-    audio_file.save("%clips/%s_%s" % (BASE_PATH, timestamp, audio_file.filename), overwrite=True)
+    audio_file.save("%sclips/%s_%s" % (BASE_PATH, timestamp, audio_file.filename), overwrite=True)
 
     # trade_data = get_database_entry(trade_id)
     # dic0 = dict()
