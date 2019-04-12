@@ -21,12 +21,12 @@
         <choice next="check_trade.vxml#stage_1" dtmf="3"/>
     </menu>
 
-    <form id="leave">
+    <menu id="leave">
         <prompt>
             <p>
                 <s>We wish you a good day!</s>
             </p>
         </prompt>
         <!--<disconnect/>-->
-    </form>
+    </menu>
 </vxml>
