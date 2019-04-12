@@ -15,7 +15,7 @@
         </field>
 
         <filled>
-            <goto nextexpr="'/trades/' + trade_id"/>
+            <goto expr="'/trades/' + trade_id"/>
         </filled>
     </form>
 </vxml>
