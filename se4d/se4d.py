@@ -197,14 +197,15 @@ def get_single_trade(trade_id):
 
 
 @server.get('/trades/delete/<trade_id:int>.vxml')
-def get_single_trade(trade_id):
+def delete_single_trade(trade_id):
     trade_data = get_database_entry(trade_id)
+    # TODO check if trade entry has the same caller id and delete only in that case.
     dic0 = dict()
     dic0.update(CORE_SETTINGS)
     dic0.update(global_state)
     dic0.update(seed_list)
     dic0.update(trade_data)
-    instance = template("%stemplates//trade_entry.tpl" % BASE_PATH, dic0)
+    instance = template("%stemplates//offer_deleted.tpl" % BASE_PATH, dic0)
     response.content_type = 'text/plain'
     return str(instance)
 
