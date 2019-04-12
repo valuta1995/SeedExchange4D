@@ -57,14 +57,14 @@ def abort_request():
     abort(404)
 
 
-def get_user_data(user_id):
-    print("Stapling user data for +%s to data package." % user_id)
+def get_user_data(caller_id):
+    print("Stapling user data for +%s to data package." % caller_id)
     global dummy_db
     if len(dummy_db) < 1:
         populate_dummy_db("rice", "bags", "wheat", "bags")
     return {"user_data": {
         "trade_list": dummy_db,
-        "caller_id": user_id,
+        "caller_id": caller_id,
     }}
 
 
@@ -77,8 +77,8 @@ def get_vxml_file(filename):
     dic0.update(CORE_SETTINGS)
     dic0.update(global_state)
     dic0.update(seed_list)
-    if 'user_id' in request.query:
-        dic0.update(get_user_data(request.query['user_id']))
+    if 'caller_id' in request.query:
+        dic0.update(get_user_data(request.query['caller_id']))
     instance = template("%stemplates//%s.tpl" % (BASE_PATH, filename), dic0)
     response.content_type = 'text/plain'
     return str(instance)
