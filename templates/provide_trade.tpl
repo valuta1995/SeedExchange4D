@@ -199,7 +199,7 @@
             </prompt>
             <filled>
                 <if cond="confirm">
-                    <data src="listings/" method="post"
+                    <data src="trades/" method="post"
                           namelist="provide_name provide_unit request_name request_unit transport_name audio_name_location"/>
                     <else>
                         <goto next="#stage_5"/>

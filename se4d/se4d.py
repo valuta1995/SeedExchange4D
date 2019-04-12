@@ -101,4 +101,18 @@ def get_vxml_file(trade_id):
     return str(instance)
 
 
+@server.post('/trades/')
+def get_vxml_file():
+    print(request)
+    # trade_data = get_database_entry(trade_id)
+    # dic0 = dict()
+    # dic0.update(CORE_SETTINGS)
+    # dic0.update(global_state)
+    # dic0.update(seed_list)
+    # dic0.update(trade_data)
+    # instance = template("%stemplates//trade_entry.tpl" % BASE_PATH, dic0)
+    # response.content_type = 'text/plain'
+    return str("")
+
+
 run(server, host="localhost", port=10123)
