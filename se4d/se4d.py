@@ -14,7 +14,6 @@ CORE_SETTINGS = {
 
 BASE_PATH = os.getcwd()[:-4]
 
-
 # Ensure these variables include all the variables used in the application.
 # Extra variables will not cause issues. missing variables will cause issues.
 GLOBAL_APPLICATION_VARIABLES = [
@@ -103,7 +102,8 @@ def get_vxml_file(trade_id):
 
 @server.post('/trades/')
 def get_vxml_file():
-    print(request)
+    body = request.body.read()
+    print(body)
     # trade_data = get_database_entry(trade_id)
     # dic0 = dict()
     # dic0.update(CORE_SETTINGS)
