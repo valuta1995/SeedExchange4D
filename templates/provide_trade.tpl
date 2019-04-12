@@ -232,6 +232,6 @@
         </prompt>
         <choice next="#stage_1" dtmf="1"/>
         <choice next="main_menu.vxml#main_menu" dtmf="2"/>
-        <choice event="#leave" message="" dtmf="3"/>
+        <choice event="leave" message="" dtmf="3"/>
     </menu>
 </vxml>
