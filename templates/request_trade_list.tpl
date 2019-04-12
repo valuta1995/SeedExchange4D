@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vxml version="{{vxml_version}}" application="{{application}}">
+    <property name="inputmodes" value="dtmf"/>
     <form id="stage_1">
         <field name="form_id" type="number">
             <prompt>
