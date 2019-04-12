@@ -114,7 +114,7 @@ def get_vxml_file():
     print("Transport by %s." % transport_name)
 
     audio_file = request.files.get("audio_name_location")
-    print(audio_file.file)
+    print(audio_file.file.read())
 
     # trade_data = get_database_entry(trade_id)
     # dic0 = dict()
