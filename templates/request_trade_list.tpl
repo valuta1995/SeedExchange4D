@@ -13,5 +13,9 @@
                 <assign name="trade_id" expr="form_trade_id"/>
             </filled>
         </field>
+
+        <filled>
+            <goto nextexpr="'/trades/' + trade_id"/>
+        </filled>
     </form>
 </vxml>
