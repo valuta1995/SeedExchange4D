@@ -5,7 +5,7 @@
     <property name="inputmodes" value="dtmf"/>
 
     <catch event="listen_to_entry">
-        % for i in range(len(trade_list)):
+        % for i in range(len(user_data['trade_list'])):
         <if cond="_message == {{i + 1}}">
             <goto next="/trades/{{user_data['trade_list'][i]['id']}}.vxml"/>
         </if>
@@ -14,7 +14,7 @@
     </catch>
 
     <catch event="delete_entry">
-        % for i in range(len(trade_list)):
+        % for i in range(len(user_data['trade_list'])):
         <if cond="_message == {{i + 1}}">
             <submit next="/trades/delete/{{user_data['trade_list'][i]['id']}}.vxml" namelist="caller_id"/>
         </if>
