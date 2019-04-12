@@ -16,9 +16,9 @@
             To check on your current trades, press 3.
         </prompt>
 
-        <choice next="provide_trade.vxml#stage_1" dtmf="1"/>
-        <choice next="request_trade.vxml#stage_1" dtmf="2"/>
-        <choice next="check_trade.vxml#stage_1" dtmf="3"/>
+        <choice next="/provide_trade.vxml#stage_1" dtmf="1"/>
+        <choice next="/request_trade.vxml#stage_1" dtmf="2"/>
+        <choice next="/check_trade.vxml#stage_1" dtmf="3"/>
     </menu>
 
     <form id="leave">

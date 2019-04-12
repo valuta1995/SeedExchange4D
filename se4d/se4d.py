@@ -94,8 +94,8 @@ def get_database_list(provide_name, request_name, transport_name):
         ]}
 
 
-@server.post('/search_trade')
-def get_vxml_file():
+@server.post('/search_trade/')
+def post_search_trade():
     provide_name = request.forms.get("provide_name")
     provide_unit = request.forms.get("provide_unit")
     print("Want %s of %s." % (provide_unit, provide_name))
@@ -126,7 +126,7 @@ def get_database_entry(trade_id):
 
 
 @server.get('/trades/<trade_id:int>.vxml')
-def get_vxml_file(trade_id):
+def get_single_trade(trade_id):
     trade_data = get_database_entry(trade_id)
     dic0 = dict()
     dic0.update(CORE_SETTINGS)
@@ -139,7 +139,7 @@ def get_vxml_file(trade_id):
 
 
 @server.post('/trades/')
-def get_vxml_file():
+def post_new_trade():
     provide_name = request.forms.get("provide_name")
     provide_unit = request.forms.get("provide_unit")
     print("Want %s of %s." % (provide_unit, provide_name))

@@ -65,7 +65,7 @@
         % end
 
         <choice event="on_provide_selected_other" message="other" dtmf="9"/>
-        <choice next="main_menu.vxml#main_menu" dtmf="0"/>
+        <choice next="/main_menu.vxml#main_menu" dtmf="0"/>
     </menu>
 
     <!-- At this stage the user tells the system what seeds they want -->
@@ -170,7 +170,7 @@
 
     <form id="stage_5">
         <block>
-            <submit next="search_trade" method="post"
+            <submit next="/search_trade/" method="post"
                     namelist="provide_name provide_unit request_name request_unit transport_name"/>
         </block>
     </form>
@@ -187,7 +187,7 @@
             </p>
         </prompt>
         <choice next="#stage_1" dtmf="1"/>
-        <choice next="main_menu.vxml#main_menu" dtmf="2"/>
-        <choice next="main_menu.vxml#disconnect" dtmf="3"/>
+        <choice next="/main_menu.vxml#main_menu" dtmf="2"/>
+        <choice next="/main_menu.vxml#disconnect" dtmf="3"/>
     </menu>
 </vxml>
