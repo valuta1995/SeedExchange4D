@@ -7,7 +7,6 @@
     <menu id="main_menu" scope="dialog">
         <prompt>
             Welcome
-            <assign name="caller_id" expr="session.connection.remote.uri"/>
         </prompt>
 
         <prompt>
@@ -24,19 +23,25 @@
 
     <form id="provide_trade">
         <block>
-            <submit next="/provide_trade.vxml#stage_1" namelist="caller_id" dtmf="1"/>
+            <assign name="provide_unit" expr="'bags'"/>
+            <assign name="caller_id" expr="session.connection.remote.uri"/>
+            <submit next="/provide_trade.vxml#stage_1" namelist="caller_id provide_unit"/>
         </block>
     </form>
 
     <form id="request_trade">
         <block>
-            <submit next="/request_trade.vxml#stage_1" namelist="caller_id" dtmf="1"/>
+            <assign name="provide_unit" expr="'bags'"/>
+            <assign name="caller_id" expr="session.connection.remote.uri"/>
+            <submit next="/request_trade.vxml#stage_1" namelist="caller_id provide_unit"/>
         </block>
     </form>
 
     <form id="check_trade">
         <block>
-            <submit next="/check_trade.vxml#stage_1" namelist="caller_id" dtmf="1"/>
+            <assign name="provide_unit" expr="'bags'"/>
+            <assign name="caller_id" expr="session.connection.remote.uri"/>
+            <submit next="/check_trade.vxml#stage_1" namelist="caller_id provide_unit"/>
         </block>
     </form>
 
