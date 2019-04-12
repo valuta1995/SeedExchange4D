@@ -27,6 +27,6 @@
                 <s>We wish you a good day!</s>
             </p>
         </prompt>
-        <disconnect/>
+        <!--<disconnect/>-->
     </form>
 </vxml>
