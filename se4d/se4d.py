@@ -102,8 +102,20 @@ def get_vxml_file(trade_id):
 
 @server.post('/trades/')
 def get_vxml_file():
-    body = request.body.read()
-    print(body)
+    provide_name = request.forms.get("provide_name")
+    provide_unit = request.forms.get("provide_unit")
+    print("Want %s of %s." % (provide_unit, provide_name))
+    
+    receive_name = request.forms.get("receive_name")
+    receive_unit = request.forms.get("receive_unit")
+    print("Give %s of %s." % (receive_unit, receive_name))
+
+    transport_name = request.forms.get("transport_name")
+    print("Transport by %s." % transport_name)
+
+    audio_name_location = request.forms.get("audio_name_location")
+    print(request.files)
+
     # trade_data = get_database_entry(trade_id)
     # dic0 = dict()
     # dic0.update(CORE_SETTINGS)
