@@ -127,8 +127,8 @@
             </p>
         </prompt>
 
-        <choice event="on_transport_selected" message="deliver" dtmf="1"/>
-        <choice event="on_transport_selected" message="pick up" dtmf="2"/>
+        <choice event="on_transport_selected" message="true" dtmf="1"/>
+        <choice event="on_transport_selected" message="false" dtmf="2"/>
 
         <choice event="on_transport_selected_other" message="" dtmf="9"/>
         <choice next="#stage_2" dtmf="0"/>

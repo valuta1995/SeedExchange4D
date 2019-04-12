@@ -17,7 +17,7 @@
         <filled>
             % for i in range(len(trade_list)):
             <if cond="trade_id == {{i}}">
-                <goto next="/trades/{{trade_list[i]['id']}}"/>
+                <goto next="/trades/{{trade_list[i]['id']}}.vxml"/>
             </if>
             % end
         </filled>
