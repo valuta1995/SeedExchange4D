@@ -26,12 +26,12 @@
         <assign name="transport_name" expr="_message"/>
         <assign name="transport_description" expr="'you and the other person will figure out another way'"/>
 
-        <if cond="_message == 'deliver'">
-            <assign name="transport_description" expr="'you will deliver to the other person'"/>
+        <if cond="_message == 'true'">
+            <assign name="transport_description" expr="'you can transport if need be'"/>
         </if>
 
-        <if cond="_message == 'pick up'">
-            <assign name="transport_description" expr="'the other person will have to pick up'"/>
+        <if cond="_message == 'false'">
+            <assign name="transport_description" expr="'you cannot transport.'"/>
         </if>
 
         <goto next="#stage_4"/>
