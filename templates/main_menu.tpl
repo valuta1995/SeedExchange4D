@@ -4,7 +4,7 @@
     <!-- set input to DTMF-->
     <property name="inputmodes" value="dtmf"/>
 
-    <form id="root">
+    <form id="initialize">
         <block>
             <assign name="caller_id" expr="session.connection.remote.uri"/>
         </block>
