@@ -10,7 +10,7 @@
                 </p>
             </prompt>
             <filled>
-                <goto nextexpr="'/trades/' + form_id"/>
+                <assign name="trade_id" expr="form_trade_id"/>
             </filled>
         </field>
     </form>
