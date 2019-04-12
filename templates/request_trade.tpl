@@ -168,10 +168,11 @@
         <choice next="#stage_1" dtmf="2"/>
     </menu>
 
-
-    <block id="stage_5">
-        <submit next="search_trade" namelist="provide_name provide_unit request_name request_unit transport_name"/>
-    </block>
+    <form id="stage_5">
+        <block>
+            <submit next="search_trade" namelist="provide_name provide_unit request_name request_unit transport_name"/>
+        </block>
+    </form>
 
 
     <!-- At this stage the user is asked if they want to exit or go again -->
