@@ -55,7 +55,7 @@
     <form id="invalid">
         <block>
             <p>
-                <s>There are only {{len(trade_list)}} entries.</s>
+                <s>There are only {{len(user_data['trade_list'])}} entries.</s>
                 <s>Please select a different entry.</s>
             </p>
         </block>
