@@ -6,7 +6,7 @@
             <p>
                 <s>
                     This is the offer of
-                    <audio expr="{{trade_entry['audio']}}"/>
+                    <audio expr="{{trade_entry['audio_name_location']}}"/>
                 </s>
                 <s>
                     They offer {{trade_entry['provide_unit']}} of {{trade_entry['provide_name']}} for your
