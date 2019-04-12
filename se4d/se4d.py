@@ -69,6 +69,20 @@ def get_vxml_file(filename):
     return str(instance)
 
 
+@server.get('/clips/<filename>.wav')
+def get_vxml_file(filename):
+    filename = filename.replace(".", "")
+    filename = filename.replace("/", "")
+    filename = filename.replace("\\", "")
+    dic0 = dict()
+    dic0.update(CORE_SETTINGS)
+    dic0.update(global_state)
+    dic0.update(seed_list)
+    instance = template("%sclips//%s.wav" % (BASE_PATH, filename), dic0)
+    response.content_type = 'audio/wav'
+    return str(instance)
+
+
 def get_database_list(provide_name, provide_unit, request_name, request_unit, transport_name):
     # Here will be a request to show only entries that are available
     global dummy_db
