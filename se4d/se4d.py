@@ -114,7 +114,7 @@ def get_vxml_file():
     print("Transport by %s." % transport_name)
 
     audio_name_location = request.forms.get("audio_name_location")
-    for k, v in request.files:
+    for k in request.files:
         print(k)
 
     # trade_data = get_database_entry(trade_id)
