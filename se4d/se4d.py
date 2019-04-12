@@ -88,7 +88,7 @@ def get_database_entry(trade_id):
     }}
 
 
-@server.get('/trades/<trade_id:number>.vxml')
+@server.get('/trades/<trade_id:int>.vxml')
 def get_vxml_file(trade_id):
     trade_data = get_database_entry(trade_id)
     dic0 = dict()
