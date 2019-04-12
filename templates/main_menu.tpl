@@ -4,11 +4,11 @@
     <!-- set input to DTMF-->
     <property name="inputmodes" value="dtmf"/>
 
-    <form id="initialize">
-        <block>
-            <assign name="caller_id" expr="session.connection.remote.uri"/>
-        </block>
-    </form>
+    <!--<form id="initialize">-->
+        <!--<block>-->
+            <!--<assign name="caller_id" expr="session.connection.remote.uri"/>-->
+        <!--</block>-->
+    <!--</form>-->
 
     <menu id="main_menu" scope="dialog">
         <prompt>
