@@ -72,24 +72,24 @@ def get_database_list(provide_name, request_name, transport_name):
     # Here will be a request to show only entries that are available
     if transport_name == 'pick up':
         return {"trade_list": [
-            {"provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
+            {"id": 1234, "provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
-            {"provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
+            {"id": 1236, "provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
-            {"provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
+            {"id": 1238, "provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
         ]}
     else:
         return {"trade_list": [
-            {"provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
+            {"id": 1234, "provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
-            {"provide_name": request_name, "request_name": provide_name, "transport_name": "pick up",
+            {"id": 1235, "provide_name": request_name, "request_name": provide_name, "transport_name": "pick up",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
-            {"provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
+            {"id": 1236, "provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
-            {"provide_name": request_name, "request_name": provide_name, "transport_name": "pick up",
+            {"id": 1237, "provide_name": request_name, "request_name": provide_name, "transport_name": "pick up",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
-            {"provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
+            {"id": 1238, "provide_name": request_name, "request_name": provide_name, "transport_name": "deliver",
              "audio_name_location": "2019-04-12 15:18:05_audio_name_location-1555082285100.wav"},
         ]}
 

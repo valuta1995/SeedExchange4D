@@ -15,7 +15,11 @@
         </field>
 
         <filled>
-            <goto expr="'/trades/' + trade_id"/>
+            % for i in range(len(trade_list)):
+            <if cond="trade_id == {{i}}">
+                <goto next="/trades/{{trade_list[i].id}}"/>
+            </if>
+            % end
         </filled>
     </form>
 </vxml>
