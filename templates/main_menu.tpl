@@ -24,6 +24,7 @@
     <form id="provide_trade">
         <block>
             <assign name="caller_id" expr="session.connection.remote.uri"/>
+            <assign name="caller_mode" expr="'provide_trade'"/>
             <submit next="/provide_trade.vxml#stage_1" namelist="caller_id"/>
         </block>
     </form>
@@ -31,6 +32,7 @@
     <form id="request_trade">
         <block>
             <assign name="caller_id" expr="session.connection.remote.uri"/>
+            <assign name="caller_mode" expr="'request_trade'"/>
             <submit next="/request_trade.vxml#stage_1" namelist="caller_id"/>
         </block>
     </form>
@@ -38,6 +40,7 @@
     <form id="check_trade">
         <block>
             <assign name="caller_id" expr="session.connection.remote.uri"/>
+            <assign name="caller_mode" expr="'check_trade'"/>
             <submit next="/check_trade.vxml#stage_1" namelist="caller_id"/>
         </block>
     </form>

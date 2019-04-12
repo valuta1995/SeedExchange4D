@@ -25,8 +25,13 @@
 
     <form id="return">
         <block>
-            <submit next="/search_trade/" method="post"
-                    namelist="provide_name provide_unit request_name request_unit transport_name"/>
+            <if cond="caller_mode == 'request_trade'">
+                <submit next="/search_trade/" method="post"
+                        namelist="caller_id provide_name provide_unit request_name request_unit transport_name"/>
+            </if>
+            <if cond="caller_mode == 'check_trade'">
+                <submit next="/check_trade.vxml#stage_1" namelist="caller_id"/>
+            </if>
         </block>
     </form>
 

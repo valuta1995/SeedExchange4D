@@ -22,7 +22,7 @@ GLOBAL_APPLICATION_VARIABLES = [
     "provide_name", "provide_unit",
     "request_name", "request_unit",
     "transport_name",
-    "caller_id"
+    "caller_id", "caller_mode"
 ]
 
 LIST_OF_SUPPORTED_SEEDS = [
@@ -166,6 +166,19 @@ def get_database_entry(trade_id):
 
 
 @server.get('/trades/<trade_id:int>.vxml')
+def get_single_trade(trade_id):
+    trade_data = get_database_entry(trade_id)
+    dic0 = dict()
+    dic0.update(CORE_SETTINGS)
+    dic0.update(global_state)
+    dic0.update(seed_list)
+    dic0.update(trade_data)
+    instance = template("%stemplates//trade_entry.tpl" % BASE_PATH, dic0)
+    response.content_type = 'text/plain'
+    return str(instance)
+
+
+@server.get('/trades/delete/<trade_id:int>.vxml')
 def get_single_trade(trade_id):
     trade_data = get_database_entry(trade_id)
     dic0 = dict()
