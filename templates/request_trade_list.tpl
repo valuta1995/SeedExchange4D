@@ -6,7 +6,7 @@
                 <p>
                     <s>
                         There are
-                        <value expr="len(trade_list)"/>
+                        <value expr="{{len(trade_list)}}"/>
                         offers that match your search.
                     </s>
                     <s>Please enter the number of the listing you wish to listen to.</s>
