@@ -23,25 +23,22 @@
 
     <form id="provide_trade">
         <block>
-            <assign name="provide_unit" expr="'bags'"/>
             <assign name="caller_id" expr="session.connection.remote.uri"/>
-            <submit next="/provide_trade.vxml#stage_1" namelist="caller_id provide_unit"/>
+            <submit next="/provide_trade.vxml#stage_1" namelist="caller_id"/>
         </block>
     </form>
 
     <form id="request_trade">
         <block>
-            <assign name="provide_unit" expr="'bags'"/>
             <assign name="caller_id" expr="session.connection.remote.uri"/>
-            <submit next="/request_trade.vxml#stage_1" namelist="caller_id provide_unit"/>
+            <submit next="/request_trade.vxml#stage_1" namelist="caller_id"/>
         </block>
     </form>
 
     <form id="check_trade">
         <block>
-            <assign name="provide_unit" expr="'bags'"/>
             <assign name="caller_id" expr="session.connection.remote.uri"/>
-            <submit next="/check_trade.vxml#stage_1" namelist="caller_id provide_unit"/>
+            <submit next="/check_trade.vxml#stage_1" namelist="caller_id"/>
         </block>
     </form>
 
