@@ -21,7 +21,8 @@ BASE_PATH = os.getcwd()[:-4]
 GLOBAL_APPLICATION_VARIABLES = [
     "provide_name", "provide_unit",
     "request_name", "request_unit",
-    "transport_name"
+    "transport_name",
+    "caller_id"
 ]
 
 LIST_OF_SUPPORTED_SEEDS = [
@@ -124,17 +125,19 @@ def get_database_list(provide_name, provide_unit, request_name, request_unit, tr
 
 @server.post('/search_trade/')
 def post_search_trade():
-    print("Alive and kicking!?")
+    caller_id = request.forms.get("caller_id")
+    transport_name = request.forms.get("transport_name")
+
     provide_name = request.forms.get("provide_name")
     provide_unit = request.forms.get("provide_unit")
-    print("Want %s of %s." % (provide_unit, provide_name))
 
     request_name = request.forms.get("request_name")
     request_unit = request.forms.get("request_unit")
-    print("Give %s of %s." % (request_unit, request_name))
 
-    transport_name = request.forms.get("transport_name")
-    print("Transport by %s." % transport_name)
+    print("%s wants %s of %s and will give %s of %s. Transport %s." % (
+        caller_id, provide_unit, provide_name, request_unit, request_name, transport_name
+    ))
+
     dic0 = dict()
     dic0.update(CORE_SETTINGS)
     dic0.update(global_state)
