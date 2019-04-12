@@ -6,7 +6,10 @@
             <prompt>
                 <p>
                     <s>There are {{len(trade_list)}} offers that match your search.</s>
-                    <s>Please enter the number of the listing you wish to listen to.</s>
+                    <s>
+                        Please enter the number of the listing you wish to listen to,
+                        or enter 0 to return to the start.
+                    </s>
                 </p>
             </prompt>
             <filled>
@@ -15,6 +18,9 @@
         </field>
 
         <filled>
+            <if cond="trade_id == 0">
+                <goto next="/main_menu.vxml#main_menu"/>
+            </if>
             % for i in range(len(trade_list)):
             <if cond="trade_id == {{i + 1}}">
                 <goto next="/trades/{{trade_list[i]['id']}}.vxml"/>

@@ -28,7 +28,10 @@
             <prompt>
                 <p>
                     <s>You have {{len(user_data['trade_list'])}} offers posted.</s>
-                    <s>Please enter the number of the listing you wish to listen to.</s>
+                    <s>
+                        Please enter the number of the listing you wish to listen to,
+                        or enter 0 to return to the start.
+                    </s>
                 </p>
             </prompt>
             <filled>
@@ -36,6 +39,9 @@
             </filled>
         </field>
         <filled>
+            <if cond="trade_id == 0">
+                <goto next="/main_menu.vxml#main_menu"/>
+            </if>
             <goto next="#manage_entry"/>
         </filled>
     </form>
