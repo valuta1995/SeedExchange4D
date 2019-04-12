@@ -1,4 +1,6 @@
+import datetime
 import os
+import time
 
 from bottle import template, Bottle, response, request, abort, run
 
@@ -114,7 +116,8 @@ def get_vxml_file():
     print("Transport by %s." % transport_name)
 
     audio_file = request.files.get("audio_name_location")
-    print(audio_file.file.read())
+    timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+    audio_file.save("%clips/%s_%s" % (BASE_PATH, timestamp, audio_file.filename), overwrite=True)
 
     # trade_data = get_database_entry(trade_id)
     # dic0 = dict()
