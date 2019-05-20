@@ -232,11 +232,11 @@ def initialize():
     print(host)
     port = Database.get_setting_or_default(conn, "port", "10123")
     print(port)
-    public_host = Database.get_setting_or_default(conn, "public_host", "%s:%s" % (host, port))
+    public_host = Database.get_setting_or_default(conn, "public_host", "https://%s:%s/" % (host, port))
     core_settings = {
         # What version of VXML are you using
         "vxml_version": "2.1",
-        "application": "%s/root.vxml" % public_host,
+        "application": "%sroot.vxml" % public_host,
     }
     seed_list = {"seed_list": [el[0] for el in Database.get_all_seeds(conn)]}
 
