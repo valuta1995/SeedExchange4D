@@ -79,7 +79,7 @@
     <menu id="stage_2">
         <prompt>
             <audio src="/static/en/you-have-chosen-to-offer.wav"/>
-            <audio expr="provide_name"/>
+            <audio expr="'/static/en/' + provide_name + '.wav'"/>
             <break time="100"/>
             <audio src="/static/en/what-seeds-would-you-like-to-request.wav"/>
             <break time="200"/>
@@ -99,7 +99,7 @@
         </prompt>
 
         % for i in range(0, len(seed_list)):
-        <choice event="on_request_selected" message="/static/en/{{seed_list[i]}}.wav" dtmf="{{i + 1}}"/>
+        <choice event="on_request_selected" message="{{seed_list[i]}}" dtmf="{{i + 1}}"/>
         % end
 
         <!--<choice event="on_request_selected_other" message="other" dtmf="9"/>-->
@@ -141,11 +141,11 @@
     <menu id="stage_4">
         <prompt>
             <audio src="/static/en/you-have-chosen-to-offer.wav"/>
-            <audio expr="provide_name"/>
+            <audio expr="'/static/en/' + provide_name + '.wav'"/>
             <break time="100"/>
 
             <audio src="/static/en/and-want-to-receive.wav"/>
-            <audio expr="request_name"/>
+            <audio expr="'/static/en/' + request_name + '.wav'"/>
             <break time="100"/>
 
             <audio src="/static/en/if-this-is-correct.wav"/>

@@ -54,12 +54,21 @@ DB_INSERT_SEED = """
 INSERT INTO seeds(name) VALUES (?)
 """
 
-DB_SELECT_USER = """
+DB_SELECT_USER_BY_PHONE = """
 SELECT * FROM users WHERE phone IS (?)
 """
 
 DB_SELECT_OFFERS_BY_USER = """
 SELECT * FROM offers WHERE poster IS (?)
+"""
+
+DB_ADD_OFFER_BY_USER = """
+INSERT INTO offers(poster, offer, request, recording, timestamp) 
+    VALUES (?, ?, ?, ?, strftime('%Y-%m-%d %H-%M-%S','now'))
+"""
+
+DB_SELECT_SEED_BY_NAME = """
+SELECT * FROM seeds WHERE name LIKE (?)
 """
 
 
@@ -136,7 +145,7 @@ def add_seed(conn, name):
 def select_user(conn, caller_id):
     try:
         c = conn.cursor()
-        c.execute(DB_SELECT_USER, (caller_id,))
+        c.execute(DB_SELECT_USER_BY_PHONE, (caller_id,))
         result = c.fetchall()
         return result
     except Error as e:
@@ -148,6 +157,28 @@ def select_offers(conn, user_id):
     try:
         c = conn.cursor()
         c.execute(DB_SELECT_OFFERS_BY_USER, (user_id,))
+        result = c.fetchall()
+        return result
+    except Error as e:
+        print(e)
+        return None
+
+
+def add_offer(conn, poster, offer, request, recording):
+    try:
+        c = conn.cursor()
+        c.execute(DB_SELECT_OFFERS_BY_USER, (poster, offer, request, recording))
+        result = c.fetchall()
+        return result
+    except Error as e:
+        print(e)
+        return None
+
+
+def select_seed(conn, seed_name):
+    try:
+        c = conn.cursor()
+        c.execute(DB_SELECT_SEED_BY_NAME, (seed_name,))
         result = c.fetchall()
         return result
     except Error as e:

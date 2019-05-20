@@ -221,9 +221,32 @@ def post_new_trade():
 
     print("%s wants %s and will give %s." % (caller_id, provide_name, request_name))
 
+    conn = Database.create_connection(DEFAULT_DB_FILE)
+
+    user = Database.select_user(conn, caller_id)
+    if len(user) < 1 or len(user) > 1:
+        return None
+    user = user[0]
+    poster_user_id = user['id']
+
+    offer_seed = Database.select_seed(provide_name)
+    if len(offer_seed) < 1 or len(offer_seed) > 1:
+        return None
+    offer_seed = offer_seed[0]
+    offer_seed_id = offer_seed['id']
+
+    request_seed = Database.select_seed(provide_name)
+    if len(request_seed) < 1 or len(request_seed) > 1:
+        return None
+    request_seed = request_seed[0]
+    request_seed_id = request_seed['id']
+
     audio_file = request.files.get("audio_name_location")
     timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')
-    audio_file.save("%s/clips/%s_%s" % (BASE_PATH, timestamp, audio_file.filename), overwrite=True)
+    recording_path = "%s/clips/%s_%s" % (BASE_PATH, timestamp, audio_file.filename)
+    audio_file.save(recording_path, overwrite=True)
+
+    Database.add_offer(conn, poster_user_id, offer_seed_id, request_seed_id, recording_path)
 
     return str("")
 
