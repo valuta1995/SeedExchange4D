@@ -78,10 +78,10 @@
     <!-- At this stage the user tells the system what seeds they want -->
     <menu id="stage_2">
         <prompt>
-            <audio src="you-have-chosen-to-offer"/>
+            <audio src="you-have-chosen-to-offer.wav"/>
             <audio expr="provide_name"/>
             <break time="100"/>
-            <audio src="what-seeds-would-you-like-to-request"/>
+            <audio src="what-seeds-would-you-like-to-request.wav"/>
             <break time="200"/>
 
             % for i in range(0, len(seed_list)):
