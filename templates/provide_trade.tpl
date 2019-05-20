@@ -7,7 +7,7 @@
     <!-- handle event for storing offer and moving to request -->
     <catch event="on_provide_selected">
         <assign name="provide_name" expr="_message"/>
-        <assign name="provide_unit" expr="'bags'"/>
+        <!--<assign name="provide_unit" expr="'bags'"/>-->
 
         <goto next="#stage_2"/>
     </catch>
@@ -15,9 +15,11 @@
     <!-- handle event for storing request and moving to info -->
     <catch event="on_request_selected">
         <assign name="request_name" expr="_message"/>
-        <assign name="request_unit" expr="'bags'"/>
+        <!--<assign name="request_unit" expr="'bags'"/>-->
 
-        <goto next="#stage_3"/>
+        <!--<goto next="#stage_3"/>-->
+        <!-- Going directly to stage 4, skipping transport -->
+        <goto next="#stage_4"/>
     </catch>
 
     <!-- handle event for storing request and moving to info -->
@@ -46,122 +48,113 @@
     <!-- At this stage the user tells the system what seeds they have available -->
     <menu id="stage_1">
         <prompt>
-            <p>
-                <s>What seeds do you want to offer?</s>
-            </p>
-            <break time="500"/>
-            <p>
-                % for i in range(0, len(seed_list)):
-                <s>To offer {{seed_list[i]['name']}}, press {{i + 1}}</s>
-                % end
+            <audio src="/static/en/you-have-chosen-to-make-a-new-trade-offer.wav"/>
+            <break time="100"/>
+            <audio src="/static/en/please-select-the-type-of-seed-you-wish-to-offer.wav"/>
+            <break time="200"/>
 
-                <s>To offer something else, press 9.</s>
-                <s>To go back, press 0.</s>
-            </p>
+            % for i in range(0, len(seed_list)):
+            <audio src="/static/en/pre-choice.wav"/>
+            <audio src="/static/en/{{seed_list[i]['name']}}.wav"/>
+            <audio src="/static/en/post-choice.wav"/>
+            <audio src="/static/en/{{i + 1}}.wav"/>
+            % end
+
+            <!--<s>To offer something else, press 9.</s>-->
+
+            <audio src="/static/en/something-went-wrong.wav"/>
+            <audio src="/static/en/post-choice.wav"/>
+            <audio src="/static/en/0.wav"/>
         </prompt>
 
         % for i in range(0, len(seed_list)):
-        <choice event="on_provide_selected" message="{{seed_list[i]['name']}}" dtmf="{{i + 1}}"/>
+        <choice event="on_provide_selected" message="/static/en/{{seed_list[i]['name']}}.wav" dtmf="{{i + 1}}"/>
         % end
 
-        <choice event="on_provide_selected_other" message="other" dtmf="9"/>
+        <!--<choice event="on_provide_selected_other" message="other" dtmf="9"/>-->
         <choice next="/main_menu.vxml#main_menu" dtmf="0"/>
     </menu>
 
     <!-- At this stage the user tells the system what seeds they want -->
     <menu id="stage_2">
         <prompt>
-            <p>
-                <s>
-                    You have offered to trade
-                    <value expr="provide_unit"/>
-                    of
-                    <value expr="provide_name"/>
-                    away.
-                </s>
-            </p>
-            <p>
-                <s>What seeds do you want to receive?</s>
-            </p>
-            <break time="500"/>
-            <p>
-                % for i in range(0, len(seed_list)):
-                <s>To request {{seed_list[i]['name']}}, press {{i + 1}}</s>
-                % end
+            <audio src="you-have-chosen-to-offer"/>
+            <audio expr="provide_name"/>
+            <break time="100"/>
+            <audio src="what-seeds-would-you-like-to-request"/>
+            <break time="200"/>
 
-                <s>To request something else, press 9.</s>
-                <s>To go back, press 0.</s>
-            </p>
+            % for i in range(0, len(seed_list)):
+            <audio src="/static/en/pre-choice.wav"/>
+            <audio src="/static/en/{{seed_list[i]['name']}}.wav"/>
+            <audio src="/static/en/post-choice.wav"/>
+            <audio src="/static/en/{{i + 1}}.wav"/>
+            % end
+
+            <!--<s>To offer something else, press 9.</s>-->
+
+            <audio src="/static/en/something-went-wrong.wav"/>
+            <audio src="/static/en/post-choice.wav"/>
+            <audio src="/static/en/0.wav"/>
         </prompt>
 
         % for i in range(0, len(seed_list)):
-        <choice event="on_request_selected" message="{{seed_list[i]['name']}}" dtmf="{{i + 1}}"/>
+        <choice event="on_request_selected" message="/static/en/{{seed_list[i]['name']}}.wav" dtmf="{{i + 1}}"/>
         % end
 
-        <choice event="on_request_selected_other" message="other" dtmf="9"/>
+        <!--<choice event="on_request_selected_other" message="other" dtmf="9"/>-->
         <choice next="#stage_1" dtmf="0"/>
     </menu>
 
     <!-- At this stage the user tells the system if they have transportation available -->
-    <menu id="stage_3">
-        <prompt>
-            <p>
-                <s>
-                    You want to receive
-                    <value expr="request_unit"/>
-                    of
-                    <value expr="request_name"/>
-                    .
-                </s>
-            </p>
-            <p>
-                <s>Can you transport the seeds to the other person or will they have to come to pick them up?</s>
-            </p>
-            <break time="500"/>
-            <p>
-                <s>If you can arrange transport, press 1.</s>
-                <s>If you cannot arrange transport, press 2.</s>
+    <!-- Functionality disabled as a result of feedback: The 'customer' will always pick up -->
+    <!--<menu id="stage_3">-->
+        <!--<prompt>-->
+            <!--<audio src="you-have-chosen-to-offer"/>-->
+            <!--<audio expr="provide_name"/>-->
+            <!--<break time="100"/>-->
 
-                <s>To organise something else, press 9.</s>
-                <s>To go back, press 0.</s>
-            </p>
-        </prompt>
+            <!--<audio src="and-want-to-receive"/>-->
+            <!--<audio expr="request_name"/>-->
+            <!--<break time="100"/>-->
+            <!--<p>-->
+                <!--<s>Can you transport the seeds to the other person or will they have to come to pick them up?</s>-->
+            <!--</p>-->
+            <!--<break time="500"/>-->
+            <!--<p>-->
+                <!--<s>If you can arrange transport, press 1.</s>-->
+                <!--<s>If you cannot arrange transport, press 2.</s>-->
 
-        <choice event="on_transport_selected" message="true" dtmf="1"/>
-        <choice event="on_transport_selected" message="false" dtmf="2"/>
+                <!--<s>To organise something else, press 9.</s>-->
+                <!--<s>To go back, press 0.</s>-->
+            <!--</p>-->
+        <!--</prompt>-->
 
-        <choice event="on_transport_selected_other" message="" dtmf="9"/>
-        <choice next="#stage_2" dtmf="0"/>
-    </menu>
+        <!--<choice event="on_transport_selected" message="true" dtmf="1"/>-->
+        <!--<choice event="on_transport_selected" message="false" dtmf="2"/>-->
+
+        <!--<choice event="on_transport_selected_other" message="" dtmf="9"/>-->
+        <!--<choice next="#stage_2" dtmf="0"/>-->
+    <!--</menu>-->
 
     <!-- At this stage we verify with the user that all is ok -->
     <menu id="stage_4">
         <prompt>
-            <p>
-                <s>
-                    You have offered to trade
-                    <value expr="provide_unit"/>
-                    of
-                    <value expr="provide_name"/>
-                    away.
-                </s>
-                <s>
-                    You want to receive
-                    <value expr="request_unit"/>
-                    of
-                    <value expr="request_name"/>
-                    .
-                </s>
-                <s>
-                    You have indicated that
-                    <value expr="transport_description"/>
-                    .
-                </s>
-            </p>
-            <p>
-                <s>If this is correct, press 1.</s>
-                <s>If this is not correct, press 2.</s>
-            </p>
+            <audio src="/static/en/you-have-chosen-to-offer.wav"/>
+            <audio expr="provide_name"/>
+            <break time="100"/>
+
+            <audio src="/static/en/and-want-to-receive.wav"/>
+            <audio expr="request_name"/>
+            <break time="100"/>
+
+            <audio src="/static/en/if-this-is-correct.wav"/>
+            <audio src="/static/en/post-choice.wav"/>
+            <audio src="/static/en/1.wav"/>
+
+            <audio src="/static/en/if-this-is-not-correct.wav"/>
+            <audio src="/static/en/post-choice.wav"/>
+            <audio src="/static/en/2.wav"/>
         </prompt>
 
         <choice next="#stage_5" dtmf="1"/>
@@ -171,31 +164,32 @@
 
     <!-- At this stage the user leaves his name, and possibly a small extra message -->
     <form id="stage_5">
-        <property name="bargein" value="true"/>
+        <property name="bargein" value="false"/>
         <record name="audio_name_location" beep="true" maxtime="10s" finalsilence="3000ms" dtmfterm="true"
                 type="audio/x-wav">
             <prompt timeout="5s">
-                <p>
-                    <s>Please say your name and location after the beep</s>
-                </p>
+                <audio src="/static/en/please-leave-a-short-message.wav"/>
             </prompt>
             <noinput>
-                <p>
-                    <s>We did not hear you, please try again.</s>
-                </p>
+                <audio src="/static/en/sorry-i-didnt-hear-anything.wav"/>
             </noinput>
         </record>
 
         <field name="confirm" type="boolean">
             <prompt>
-                <p>
-                    <s>
-                        Your message is
-                        <audio expr="audio_name_location"/>
-                        .
-                    </s>
-                    <s>Press 1 to save it and 2 to try again.</s>
-                </p>
+                <audio src="/static/en/your-message-is.wav"/>
+                <break time="100"/>
+
+                <audio expr="audio_name_location"/>
+                <break time="100"/>
+
+                <audio src="/static/en/if-this-is-correct.wav"/>
+                <audio src="/static/en/post-choice.wav"/>
+                <audio src="/static/en/1.wav"/>
+
+                <audio src="/static/en/if-this-is-not-correct.wav"/>
+                <audio src="/static/en/post-choice.wav"/>
+                <audio src="/static/en/2.wav"/>
             </prompt>
             <filled>
                 <if cond="confirm">
@@ -214,15 +208,33 @@
     <!-- At this stage the user is asked if they want to exit or go again -->
     <menu id="stage_finished" scope="dialog" dtmf="true">
         <prompt>
-            <p>
-                <s>Your offer has been recorded.</s>
-                <s>To make another offer, press 1.</s>
-                <s>To go to the main menu, press 2.</s>
-                <s>If you are finished, press 3.</s>
-            </p>
+            <audio src="/static/en/your-offer-has-been-recorded.wav"/>
+            <break time="100"/>
+
+            <audio src="/static/en/pre-choice.wav"/>
+            <audio src="/static/en/making-another-trade-offer.wav"/>
+            <audio src="/static/en/post-choice.wav"/>
+            <audio src="/static/en/1.wav"/>
+
+            <audio src="/static/en/pre-choice.wav"/>
+            <audio src="/static/en/listening-to-existing-trade-offers.wav"/>
+            <audio src="/static/en/post-choice.wav"/>
+            <audio src="/static/en/2.wav"/>
+
+            <audio src="/static/en/pre-choice.wav"/>
+            <audio src="/static/en/managing-your-current-offers.wav"/>
+            <audio src="/static/en/post-choice.wav"/>
+            <audio src="/static/en/3.wav"/>
+
+            <audio src="/static/en/pre-choice.wav"/>
+            <audio src="/static/en/done-with-system.wav"/>
+            <audio src="/static/en/post-choice.wav"/>
+            <audio src="/static/en/0.wav"/>
+
         </prompt>
         <choice next="#stage_1" dtmf="1"/>
-        <choice next="/main_menu.vxml#main_menu" dtmf="2"/>
-        <choice next="/main_menu.vxml#leave" dtmf="3"/>
+        <choice next="/main_menu.vxml#request_trade" dtmf="2"/>
+        <choice next="/main_menu.vxml#check_trade" dtmf="3"/>
+        <choice next="/main_menu.vxml#leave" dtmf="0"/>
     </menu>
 </vxml>
