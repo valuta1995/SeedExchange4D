@@ -8,146 +8,59 @@ DB_CREATE_TABLE = [
 )""",
     """CREATE TABLE IF NOT EXISTS roles (
   id integer PRIMARY KEY,
-  name text UNIQUE NOT NULL
+  name text UNIQUE NOT NULL,
+  can_create_offers integer NOT NULL,
+  can_manage_own_offers integer NOT NULL,
+  can_manage_all_offers integer NOT NULL,
+  can_listen_to_offers integer NOT NULL
 )""",
     """CREATE TABLE IF NOT EXISTS users (
   id integer PRIMARY KEY,
   name text NOT NULL,
-  phone text NOT NULL,
+  phone text UNIQUE NOT NULL,
   role integer NOT NULL,
   FOREIGN KEY (role) REFERENCES roles (id)
 )""",
     """CREATE TABLE IF NOT EXISTS seeds (
   id integer PRIMARY KEY,
-  name text NOT NULL
+  name text UNIQUE NOT NULL
 )""",
     """CREATE TABLE IF NOT EXISTS offers (
   id integer PRIMARY KEY,
-  offer integer,
-  request integer,
-  timestamp text,
+  poster integer NOT NULL,
+  offer integer NOT NULL,
+  request integer NOT NULL,
+  recording text NOT NULL,
+  timestamp text NOT NULL,
+  FOREIGN KEY (poster) REFERENCES users (id),
   FOREIGN KEY (offer) REFERENCES seeds (id),
   FOREIGN KEY (request) REFERENCES seeds (id)
 )"""
 ]
 
 DB_SELECT_SETTING = """
-SELECT value FROM settings WHERE settings.setting IS ?
+SELECT value FROM settings WHERE settings.setting IS (?)
 """
 
 DB_INSERT_SETTING = """
-INSERT INTO settings(setting, value) VALUES (?, ?)
+INSERT OR REPLACE INTO settings(setting, value) VALUES (?, ?)
 """
 
 DB_SELECT_SEEDS = """
 SELECT name FROM seeds
 """
 
-BG_SELECT_KEYWORDS = """
-SELECT * FROM keywords
+DB_INSERT_SEED = """
+INSERT INTO seeds(name) VALUES (?)
 """
 
-BG_SELECT_KEYWORDS_BY_NAME = """
-SELECT * FROM keywords WHERE keywords.name LIKE ?
+DB_SELECT_USER = """
+SELECT * FROM users WHERE phone IS (?)
 """
 
-BG_SELECT_CITIES = """
-SELECT * FROM cities WHERE cities.id IN (
-  SELECT city_id from keywords_cities WHERE keywords_cities.keyword_id IS ?
-)"""
-
-BG_SELECT_SENTIMENT = """
-SELECT *
-FROM sentiments
-WHERE sentiments.id IN (
-  SELECT tweets.id
-  FROM tweets
-  WHERE tweets.keyword_city_id IN (
-    SELECT keywords_cities.id
-    FROM keywords_cities
-    WHERE keywords_cities.keyword_id IS ?
-      AND keywords_cities.city_id IS ?
-  )
-)"""
-
-BG_INSERT_KEYWORDS = """
-INSERT INTO keywords(enabled, name, twitter_query, keyword_regex, cities_list, min_tweet_count, max_tweet_count)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+DB_SELECT_OFFERS_BY_USER = """
+SELECT * FROM offers WHERE poster IS (?)
 """
-
-BG_INSERT_KEYWORDS_CITIES = """
-INSERT INTO keywords_cities(keyword_id, city_id, cluster) VALUES (?, ?, ?) 
-"""
-
-BG_SELECT_CITIES_COLLECTION = """
-SELECT * FROM cities WHERE cities.id IN (
-    SELECT cities_collection.city_id FROM cities_collection WHERE cities_collection.name LIKE ?
-)"""
-
-BG_SELECT_COLLECTION_NAME = """
-SELECT name FROM cities_collection WHERE cities_collection.id IS ?
-"""
-
-BG_SELECT_COLLECTION_ID = """
-SELECT id FROM cities_collection WHERE cities_collection.name LIKE ?
-"""
-
-BG_SELECT_TWEETS = """
-SELECT * FROM tweets WHERE tweets.keyword_city_id IN (
-  SELECT keywords_cities.id FROM keywords_cities WHERE 
-    keywords_cities.keyword_id IS ? AND
-    keywords_cities.city_id IS ? 
-)
-"""
-
-BG_INSERT_TWEET = """
-INSERT OR IGNORE INTO tweets(id, body, time, keyword_city_id) VALUES (?, ?, ?, ?) 
-"""
-
-BG_INSERT_SENTIMENT = """
-INSERT INTO sentiments(id, score, sentiment) VALUES (?, ?, ?) 
-"""
-
-
-def set_setting(conn, setting, value):
-    try:
-        c = conn.cursor()
-        c.execute(DB_INSERT_SETTING, setting, value)
-        result = c.fetchall()
-        return result
-    except Error as e:
-        print(e)
-        return value
-
-
-def get_setting_or_default(conn, setting, value):
-    try:
-        c = conn.cursor()
-        c.execute(DB_SELECT_SETTING, setting)
-        result = c.fetchall()
-        return result
-    except Error as e:
-        print(e)
-        set_setting(conn, setting, value)
-        try:
-            c = conn.cursor()
-            c.execute(DB_SELECT_SETTING, setting)
-            result = c.fetchall()
-            return result
-        except Error as e:
-            print(e)
-            return None
-
-
-def get_all_seeds(conn):
-    try:
-        c = conn.cursor()
-        c.execute(DB_SELECT_SEEDS)
-        result = c.fetchall()
-        return result
-    except Error as e:
-        print(e)
-        return None
 
 
 def execute_query(conn, db_query, params=()):
@@ -169,3 +82,73 @@ def create_connection(db_file):
         print(e)
 
     return None
+
+
+def set_setting(conn, setting, value):
+    try:
+        c = conn.cursor()
+        c.execute(DB_INSERT_SETTING, (setting, value))
+        result = c.fetchall()
+        return result
+    except Error as e:
+        print(e)
+        return value
+
+
+def get_setting_or_default(conn, setting, value):
+    try:
+        c = conn.cursor()
+        c.execute(DB_SELECT_SETTING, (setting,))
+        result = c.fetchall()
+        if len(result) < 1:
+            set_setting(conn, setting, value)
+            c.execute(DB_SELECT_SETTING, (setting,))
+            result = c.fetchall()
+        return result[0][0]
+    except Error as e:
+        print(e)
+        return None
+
+
+def get_all_seeds(conn):
+    try:
+        c = conn.cursor()
+        c.execute(DB_SELECT_SEEDS)
+        result = c.fetchall()
+        return result
+    except Error as e:
+        print(e)
+        return None
+
+
+def add_seed(conn, name):
+    try:
+        c = conn.cursor()
+        c.execute(DB_INSERT_SEED, (name,))
+        result = c.fetchall()
+        return result
+    except Error as e:
+        print(e)
+        return None
+
+
+def select_user(conn, caller_id):
+    try:
+        c = conn.cursor()
+        c.execute(DB_SELECT_USER, (caller_id,))
+        result = c.fetchall()
+        return result
+    except Error as e:
+        print(e)
+        return None
+
+
+def select_offers(conn, user_id):
+    try:
+        c = conn.cursor()
+        c.execute(DB_SELECT_OFFERS_BY_USER, (user_id,))
+        result = c.fetchall()
+        return result
+    except Error as e:
+        print(e)
+        return None

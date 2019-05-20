@@ -55,7 +55,7 @@
 
             % for i in range(0, len(seed_list)):
             <audio src="/static/en/pre-choice.wav"/>
-            <audio src="/static/en/{{seed_list[i]['name']}}.wav"/>
+            <audio src="/static/en/{{seed_list[i]}}.wav"/>
             <audio src="/static/en/post-choice.wav"/>
             <audio src="/static/en/{{i + 1}}.wav"/>
             % end
@@ -68,7 +68,7 @@
         </prompt>
 
         % for i in range(0, len(seed_list)):
-        <choice event="on_provide_selected" message="/static/en/{{seed_list[i]['name']}}.wav" dtmf="{{i + 1}}"/>
+        <choice event="on_provide_selected" message="/static/en/{{seed_list[i]}}.wav" dtmf="{{i + 1}}"/>
         % end
 
         <!--<choice event="on_provide_selected_other" message="other" dtmf="9"/>-->
@@ -86,7 +86,7 @@
 
             % for i in range(0, len(seed_list)):
             <audio src="/static/en/pre-choice.wav"/>
-            <audio src="/static/en/{{seed_list[i]['name']}}.wav"/>
+            <audio src="/static/en/{{seed_list[i]}}.wav"/>
             <audio src="/static/en/post-choice.wav"/>
             <audio src="/static/en/{{i + 1}}.wav"/>
             % end
@@ -99,7 +99,7 @@
         </prompt>
 
         % for i in range(0, len(seed_list)):
-        <choice event="on_request_selected" message="/static/en/{{seed_list[i]['name']}}.wav" dtmf="{{i + 1}}"/>
+        <choice event="on_request_selected" message="/static/en/{{seed_list[i]}}.wav" dtmf="{{i + 1}}"/>
         % end
 
         <!--<choice event="on_request_selected_other" message="other" dtmf="9"/>-->
@@ -194,7 +194,7 @@
             <filled>
                 <if cond="confirm">
                     <data src="/trades/" method="post"
-                          namelist="caller_id provide_name provide_unit request_name request_unit transport_name audio_name_location"/>
+                          namelist="caller_id provide_name request_name audio_name_location"/>
                     <else>
                         <goto next="#stage_5"/>
                     </else>
