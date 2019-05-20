@@ -236,7 +236,7 @@ def initialize():
     core_settings = {
         # What version of VXML are you using
         "vxml_version": "2.1",
-        "application": "%sroot.vxml" % public_host,
+        "application": "/root.vxml" % public_host,
     }
     seed_list = {"seed_list": [el[0] for el in Database.get_all_seeds(conn)]}
 
