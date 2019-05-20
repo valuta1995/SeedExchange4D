@@ -10,7 +10,7 @@ from bottle import template, Bottle, response, request, abort, run, static_file
 
 DEFAULT_DB_FILE = "../db.sqlite"
 
-BASE_PATH = os.getcwd()[:-4]
+BASE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 # Ensure these variables include all the variables used in the application.
 # Extra variables will not cause issues. missing variables will cause issues.
@@ -76,7 +76,7 @@ def get_vxml_file(filename):
         else:
             print("User not found in system!")
     print(seed_list)
-    instance = template("%stemplates//%s.tpl" % (BASE_PATH, filename), dic0)
+    instance = template("%s/templates/%s.tpl" % (BASE_PATH, filename), dic0)
     response.content_type = 'text/plain'
     return str(instance)
 
@@ -87,7 +87,7 @@ def get_vxml_file(filename):
     filename = filename.replace("/", "")
     filename = filename.replace("\\", "")
     response.content_type = 'audio/wav'
-    return static_file("%s.wav" % filename, root="%sclips/" % BASE_PATH)
+    return static_file("/%s.wav" % filename, root="%s/clips" % BASE_PATH)
 
 
 @server.get('/static/<language>/<filename>.wav')
@@ -96,7 +96,7 @@ def get_vxml_file(language, filename):
     filename = filename.replace("/", "")
     filename = filename.replace("\\", "")
     response.content_type = 'audio/wav'
-    return static_file("%s.wav" % filename, root="%sstatic/%s/" % (BASE_PATH, language))
+    return static_file("/%s.wav" % filename, root="%s/static/%s" % (BASE_PATH, language))
 
 
 def get_database_list(provide_name, provide_unit, request_name, request_unit, transport_name):
@@ -165,7 +165,7 @@ def post_search_trade():
     dic0.update(global_state)
     dic0.update(seed_list)
     dic0.update(get_database_list(provide_name, provide_unit, request_name, request_unit, transport_name))
-    instance = template("%stemplates//request_trade_list.tpl" % BASE_PATH, dic0)
+    instance = template("%s/templates/request_trade_list.tpl" % BASE_PATH, dic0)
     response.content_type = 'text/plain'
     return str(instance)
 
@@ -194,7 +194,7 @@ def get_single_trade(trade_id):
     dic0.update(global_state)
     dic0.update(seed_list)
     dic0.update(trade_data)
-    instance = template("%stemplates//trade_entry.tpl" % BASE_PATH, dic0)
+    instance = template("%s/templates/trade_entry.tpl" % BASE_PATH, dic0)
     response.content_type = 'text/plain'
     return str(instance)
 
@@ -208,7 +208,7 @@ def delete_single_trade(trade_id):
     dic0.update(global_state)
     dic0.update(seed_list)
     dic0.update(trade_data)
-    instance = template("%stemplates//offer_deleted.tpl" % BASE_PATH, dic0)
+    instance = template("%s/templates/offer_deleted.tpl" % BASE_PATH, dic0)
     response.content_type = 'text/plain'
     return str(instance)
 
@@ -223,7 +223,7 @@ def post_new_trade():
 
     audio_file = request.files.get("audio_name_location")
     timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('%Y%m%d_%H%M%S')
-    audio_file.save("%sclips/%s_%s" % (BASE_PATH, timestamp, audio_file.filename), overwrite=True)
+    audio_file.save("%s/clips/%s_%s" % (BASE_PATH, timestamp, audio_file.filename), overwrite=True)
 
     return str("")
 
