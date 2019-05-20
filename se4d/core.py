@@ -2,6 +2,8 @@ import datetime
 import os
 import time
 
+print(os.environ['PYTHONPATH'].split(os.pathsep))
+
 from se4d import Database
 
 from bottle import template, Bottle, response, request, abort, run, static_file
