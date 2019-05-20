@@ -77,6 +77,7 @@ def execute_query(conn, db_query, params=()):
 def create_connection(db_file):
     try:
         conn = sqlite3.connect(db_file)
+        conn.row_factory = sqlite3.Row
         return conn
     except Error as e:
         print(e)

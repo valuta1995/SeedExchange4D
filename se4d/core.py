@@ -45,10 +45,13 @@ def abort_request():
 
 
 def get_user_data(caller_id):
-    print("Stapling user data for +%s to data package." % caller_id)
+    print("Stapling user data for %s to data package." % caller_id)
 
     conn = Database.create_connection(DEFAULT_DB_FILE)
     user = Database.select_user(conn, caller_id)
+    if len(user) < 1 or len(user) > 1:
+        return None
+    user = user[0]
     trade_list = Database.select_offers(conn, user['id'])
 
     return {"user_data": {
@@ -67,7 +70,11 @@ def get_vxml_file(filename):
     dic0.update(global_state)
     dic0.update(seed_list)
     if 'caller_id' in request.query:
-        dic0.update(get_user_data(request.query['caller_id']))
+        data = get_user_data(request.query['caller_id'])
+        if data is not None:
+            dic0.update(data)
+        else:
+            print("User not found in system!")
     print(seed_list)
     instance = template("%stemplates//%s.tpl" % (BASE_PATH, filename), dic0)
     response.content_type = 'text/plain'
