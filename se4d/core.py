@@ -2,17 +2,11 @@ import datetime
 import os
 import time
 
+from se4d import Database
+
 from bottle import template, Bottle, response, request, abort, run, static_file
 
-# Where is the application root hosted?
-HOST_NAME = "https://vxml.valutadev.com"
-
-# Some global settings
-CORE_SETTINGS = {
-    # What version of VXML are you using
-    "vxml_version": "2.1",
-    "application": "%s/root.vxml" % HOST_NAME,
-}
+DEFAULT_DB_FILE = "../db.sqlite"
 
 BASE_PATH = os.getcwd()[:-4]
 
@@ -25,17 +19,9 @@ GLOBAL_APPLICATION_VARIABLES = [
     "caller_id", "caller_mode"
 ]
 
-LIST_OF_SUPPORTED_SEEDS = [
-    {"name": "yam", "unit": "bags"},
-    {"name": "soybeans", "unit": "bags"},
-    {"name": "maize", "unit": "bags"},
-    {"name": "rice", "unit": "bags"},
-    {"name": "wheat", "unit": "bags"},
-]
-
 global_state = {"global_vars": GLOBAL_APPLICATION_VARIABLES}
-seed_list = {"seed_list": LIST_OF_SUPPORTED_SEEDS}
-dummy_db = []
+seed_list = {"seed_list": Database.get_all_seeds()}
+
 server = Bottle()
 
 
@@ -74,7 +60,7 @@ def get_vxml_file(filename):
     filename = filename.replace("/", "")
     filename = filename.replace("\\", "")
     dic0 = dict()
-    dic0.update(CORE_SETTINGS)
+    dic0.update(core_settings)
     dic0.update(global_state)
     dic0.update(seed_list)
     if 'caller_id' in request.query:
@@ -157,7 +143,7 @@ def post_search_trade():
     ))
 
     dic0 = dict()
-    dic0.update(CORE_SETTINGS)
+    dic0.update(core_settings)
     dic0.update(global_state)
     dic0.update(seed_list)
     dic0.update(get_database_list(provide_name, provide_unit, request_name, request_unit, transport_name))
@@ -187,7 +173,7 @@ def get_database_entry(trade_id):
 def get_single_trade(trade_id):
     trade_data = get_database_entry(trade_id)
     dic0 = dict()
-    dic0.update(CORE_SETTINGS)
+    dic0.update(core_settings)
     dic0.update(global_state)
     dic0.update(seed_list)
     dic0.update(trade_data)
@@ -201,7 +187,7 @@ def delete_single_trade(trade_id):
     trade_data = get_database_entry(trade_id)
     # TODO check if trade entry has the same caller id and delete only in that case.
     dic0 = dict()
-    dic0.update(CORE_SETTINGS)
+    dic0.update(core_settings)
     dic0.update(global_state)
     dic0.update(seed_list)
     dic0.update(trade_data)
@@ -232,4 +218,19 @@ def post_new_trade():
     return str("")
 
 
-run(server, host="localhost", port=10123)
+# Set up the database if it does not yet exist
+conn = Database.create_connection(DEFAULT_DB_FILE)
+for statement in Database.DB_CREATE_TABLE:
+    print(Database.execute_query(conn, statement))
+
+host = Database.get_setting_or_default(conn, "host", "localhost")
+port = Database.get_setting_or_default(conn, "port", "10123")
+public_host = Database.get_setting_or_default(conn, "public_host", "%s:%s" % (host, port))
+
+core_settings = {
+    # What version of VXML are you using
+    "vxml_version": "2.1",
+    "application": "%s/root.vxml" % host,
+}
+
+# run(server, host=host, port=port)
